@@ -1,5 +1,5 @@
 package TestApp::Model::DB;
-our $VERSION = '0.093020';
+our $VERSION = '0.093050';
 
 
 use parent 'Catalyst::Model::DBIC::Schema';

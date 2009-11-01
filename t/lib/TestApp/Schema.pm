@@ -1,5 +1,5 @@
 package TestApp::Schema;
-our $VERSION = '0.093020';
+our $VERSION = '0.093050';
 
 
 use parent 'DBIx::Class::Schema';

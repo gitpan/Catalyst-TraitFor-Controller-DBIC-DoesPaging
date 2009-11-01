@@ -7,25 +7,27 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "version" : "0.093020",
+   "version" : "0.093050",
    "name" : "Catalyst-TraitFor-Controller-DBIC-DoesPaging",
    "author" : [
       "Arthur Axel \"fREW\" Schmidt <frioux+cpan@gmail.com>"
    ],
    "license" : "perl",
    "build_requires" : {
-      "SQL::Translator" : "0",
+      "SQL::Translator" : "0.11002",
       "FindBin" : "0",
-      "Catalyst::Model::DBIC::Schema" : "0",
       "Test::More" : "0.88",
+      "Catalyst::Model::DBIC::Schema" : "0",
       "Catalyst::View::JSON" : "0",
-      "Catalyst::Test" : "0",
-      "Test::Deep" : "0"
+      "JSON" : "0",
+      "Test::Deep" : "0",
+      "Catalyst::Test" : "0"
    },
    "requires" : {
       "parent" : "0",
       "Catalyst::Runtime" : "0",
-      "DBIx::Class" : "0.08108"
+      "DBIx::Class" : "0.08108",
+      "Carp" : "0"
    },
    "abstract" : "Helps you paginate, search, sort, and more easily using DBIx::Class"
 }
