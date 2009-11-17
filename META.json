@@ -2,12 +2,12 @@
    "resources" : {
       "repository" : "http://github.com/frioux/Catalyst-TraitFor-Controller-DBIC-DoesPaging"
    },
-   "generated_by" : "Dist::Zilla version 1.093010",
+   "generated_by" : "Dist::Zilla version 1.093180",
    "meta-spec" : {
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "version" : "0.093050",
+   "version" : "0.093200",
    "name" : "Catalyst-TraitFor-Controller-DBIC-DoesPaging",
    "author" : [
       "Arthur Axel \"fREW\" Schmidt <frioux+cpan@gmail.com>"
@@ -17,7 +17,7 @@
       "SQL::Translator" : "0.11002",
       "FindBin" : "0",
       "Test::More" : "0.88",
-      "Catalyst::Model::DBIC::Schema" : "0",
+      "Catalyst::Model::DBIC::Schema" : "0.29",
       "Catalyst::View::JSON" : "0",
       "JSON" : "0",
       "Test::Deep" : "0",
@@ -25,7 +25,7 @@
    },
    "requires" : {
       "parent" : "0",
-      "Catalyst::Runtime" : "0",
+      "Catalyst::Runtime" : "5.80000",
       "DBIx::Class" : "0.08108",
       "Carp" : "0"
    },

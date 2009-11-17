@@ -1,5 +1,5 @@
 package Catalyst::TraitFor::Controller::DBIC::DoesPaging;
-our $VERSION = '0.093050';
+our $VERSION = '0.093200';
 
 
 
@@ -104,12 +104,12 @@ Catalyst::TraitFor::Controller::DBIC::DoesPaging - Helps you paginate, search, s
 
 =head1 VERSION
 
-version 0.093050
+version 0.093200
 
 =head1 SYNOPSIS
 
  package MyApp::Controller::Foo;
-our $VERSION = '0.093050';
+our $VERSION = '0.093200';
 
 
  use Moose;

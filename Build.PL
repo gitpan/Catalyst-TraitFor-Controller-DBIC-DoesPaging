@@ -14,7 +14,7 @@ my $build = Module::Build->new(
   ],
   requires      => {
     "parent" => '0',
-    "Catalyst::Runtime" => '0',
+    "Catalyst::Runtime" => '5.80000',
     "DBIx::Class" => '0.08108',
     "Carp" => '0',
   },
@@ -22,7 +22,7 @@ my $build = Module::Build->new(
     "SQL::Translator" => '0.11002',
     "FindBin" => '0',
     "Test::More" => '0.88',
-    "Catalyst::Model::DBIC::Schema" => '0',
+    "Catalyst::Model::DBIC::Schema" => '0.29',
     "Catalyst::View::JSON" => '0',
     "JSON" => '0',
     "Test::Deep" => '0',
