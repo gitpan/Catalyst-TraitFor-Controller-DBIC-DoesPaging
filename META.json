@@ -7,7 +7,7 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "version" : "0.093510",
+   "version" : "0.093511",
    "name" : "Catalyst-TraitFor-Controller-DBIC-DoesPaging",
    "author" : [
       "Arthur Axel \"fREW\" Schmidt <frioux+cpan@gmail.com>"
@@ -18,12 +18,14 @@
    },
    "requires" : {
       "parent" : "0",
-      "SQL::Translator" : "0",
+      "SQL::Translator" : "0.11002",
       "FindBin" : "0",
-      "Catalyst::Model::DBIC::Schema" : "0",
+      "Carp" : "0",
+      "Catalyst::Model::DBIC::Schema" : "0.29",
       "Test::More" : "0.88",
       "Catalyst::View::JSON" : "0",
-      "Catalyst::Runtime" : "0",
+      "Catalyst::Runtime" : "5.80000",
+      "JSON" : "0",
       "Catalyst::Test" : "0",
       "Test::Deep" : "0",
       "DBIx::Class" : "0.08108"

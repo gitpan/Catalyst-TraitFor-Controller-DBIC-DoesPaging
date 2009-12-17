@@ -13,16 +13,18 @@ meta-spec:
   version: 1.4
 name: Catalyst-TraitFor-Controller-DBIC-DoesPaging
 requires:
-  Catalyst::Model::DBIC::Schema: 0
-  Catalyst::Runtime: 0
+  Carp: 0
+  Catalyst::Model::DBIC::Schema: 0.29
+  Catalyst::Runtime: 5.80000
   Catalyst::Test: 0
   Catalyst::View::JSON: 0
   DBIx::Class: 0.08108
   FindBin: 0
-  SQL::Translator: 0
+  JSON: 0
+  SQL::Translator: 0.11002
   Test::Deep: 0
   Test::More: 0.88
   parent: 0
 resources:
   repository: http://github.com/frioux/Catalyst-TraitFor-Controller-DBIC-DoesPaging
-version: 0.093510
+version: 0.093511

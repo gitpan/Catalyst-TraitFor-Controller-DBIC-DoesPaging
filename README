@@ -3,7 +3,7 @@ NAME
     search, sort, and more easily using DBIx::Class
 
 VERSION
-    version 0.093510
+    version 0.093511
 
 SYNOPSIS
      package MyApp::Controller::Foo;
