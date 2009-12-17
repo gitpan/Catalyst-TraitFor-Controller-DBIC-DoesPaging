@@ -1,7 +1,5 @@
 package TestApp::Schema::ResultSet::Stations;
-our $VERSION = '0.093200';
-
-
+our $VERSION = '0.093510';
 use parent 'DBIx::Class::ResultSet';
 use strict;
 use warnings;

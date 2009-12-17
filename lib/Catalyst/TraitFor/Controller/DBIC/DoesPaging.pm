@@ -1,7 +1,5 @@
 package Catalyst::TraitFor::Controller::DBIC::DoesPaging;
-our $VERSION = '0.093200';
-
-
+our $VERSION = '0.093510';
 
 # ABSTRACT: Helps you paginate, search, sort, and more easily using DBIx::Class
 
@@ -56,9 +54,24 @@ sub sort {
 
 sub simple_deletion {
    my ($self, $c, $rs) = @_;
+
    # param names should be configurable
    my $to_delete = $c->request->params->{to_delete} or croak 'Required cgi parameter (to_delete) undefined!';
-   $rs->search({ id => { -in => $to_delete } })->delete();
+   my @pks = map $rs->current_source_alias.q{.}.$_, $rs->result_source->primary_columns;
+
+   my $expression;
+   if (@pks == 1) {
+      $expression = { $pks[0] => { -in => $to_delete } };
+   } else {
+      $expression = [
+	 map {
+	    my %hash;
+	    @hash{@pks} = split /,/, $_;
+	    \%hash;
+	 } @{$to_delete}
+      ];
+   }
+   $rs->search($expression)->delete();
    return $to_delete;
 }
 
@@ -69,7 +82,8 @@ sub simple_search {
    foreach ( keys %{ $c->request->params } ) {
       if ( $c->request->params->{$_} and not $skips{$_} ) {
          # should be configurable
-         $searches->{$_} = { like => [map "%$_%", $c->request->param($_)] };
+         $searches->{$rs->current_source_alias.q{.}.$_} =
+	    { like => [map "%$_%", $c->request->param($_)] };
       }
    }
 
@@ -80,11 +94,17 @@ sub simple_search {
 
 sub simple_sort {
    my ($self, $c, $rs) = @_;
-   my %order_by = ( order_by => [ $rs->result_source->primary_columns ] );
+   my %order_by = (
+      order_by => [
+         map $rs->current_source_alias.q{.}.$_,
+         $rs->result_source->primary_columns
+      ]
+   );
    if ( $c->request->params->{sort} ) {
       %order_by = (
          order_by => {
-            q{-}.$c->request->params->{dir} => $c->request->params->{sort}
+            q{-}.$c->request->params->{dir} =>
+            $rs->current_source_alias.q{.}.$c->request->params->{sort}
          }
       );
    }
@@ -104,14 +124,11 @@ Catalyst::TraitFor::Controller::DBIC::DoesPaging - Helps you paginate, search, s
 
 =head1 VERSION
 
-version 0.093200
+version 0.093510
 
 =head1 SYNOPSIS
 
  package MyApp::Controller::Foo;
-our $VERSION = '0.093200';
-
-
  use Moose;
  BEGIN { extends 'Catalyst::Controller' }
  with 'Catalyst::TraitFor::Controller::DBIC::DoesPaging';
@@ -275,7 +292,8 @@ Deletes from the passed in resultset based on the following CGI parameter:
  to_delete - values of the ids of items to delete
 
 This is the only method that does not return a ResultSet.  Instead it returns an
-arrayref of the id's that it deleted.
+arrayref of the id's that it deleted.  If the ResultSet has has a multipk this will
+expect each tuple of PK's to be separated by commas.
 
 Note that this method uses the $rs->delete method, as opposed to $rs->delete_all
 

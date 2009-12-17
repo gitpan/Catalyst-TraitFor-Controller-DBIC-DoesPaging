@@ -1,7 +1,5 @@
 package TestApp::Controller::Root;
-our $VERSION = '0.093200';
-
-
+our $VERSION = '0.093510';
 
 use Moose;
 BEGIN { extends 'Catalyst::Controller' };
@@ -55,6 +53,12 @@ sub test_simple_deletion :Local {
     my ( $self, $c ) = @_;
 
     $c->stash->{js} = $self->simple_deletion($c, $c->model('DB::Stations'));
+}
+
+sub test_simple_deletion_multipk :Local {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{js} = $self->simple_deletion($c, $c->model('DB::MultiPk'));
 }
 
 sub default :Path {

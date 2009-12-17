@@ -2,6 +2,7 @@ Changes
 LICENSE
 MANIFEST
 META.json
+META.yml
 Makefile.PL
 README
 dist.ini
@@ -11,6 +12,7 @@ t/lib/TestApp.pm
 t/lib/TestApp/Controller/Root.pm
 t/lib/TestApp/Model/DB.pm
 t/lib/TestApp/Schema.pm
+t/lib/TestApp/Schema/Result/MultiPk.pm
 t/lib/TestApp/Schema/Result/Stations.pm
 t/lib/TestApp/Schema/ResultSet/Stations.pm
 t/lib/TestApp/View/JSON.pm
