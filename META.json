@@ -2,23 +2,21 @@
    "resources" : {
       "repository" : "http://github.com/frioux/Catalyst-TraitFor-Controller-DBIC-DoesPaging"
    },
-   "generated_by" : "Dist::Zilla version 1.093400",
    "meta-spec" : {
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "version" : "0.093511",
+   "generated_by" : "Dist::Zilla version 1.100660",
+   "version" : "1.00000",
    "name" : "Catalyst-TraitFor-Controller-DBIC-DoesPaging",
    "author" : [
       "Arthur Axel \"fREW\" Schmidt <frioux+cpan@gmail.com>"
    ],
    "license" : "perl",
-   "build_requires" : {
-      "Module::Build" : "0.35"
-   },
+   "build_requires" : {},
    "requires" : {
-      "parent" : "0",
       "SQL::Translator" : "0.11002",
+      "parent" : "0",
       "FindBin" : "0",
       "Carp" : "0",
       "Catalyst::Model::DBIC::Schema" : "0.29",
@@ -26,13 +24,13 @@
       "Catalyst::View::JSON" : "0",
       "Catalyst::Runtime" : "5.80000",
       "JSON" : "0",
-      "Catalyst::Test" : "0",
+      "DBIx::Class" : "0.08108",
       "Test::Deep" : "0",
-      "DBIx::Class" : "0.08108"
+      "Catalyst::Test" : "0"
    },
    "abstract" : "Helps you paginate, search, sort, and more easily using DBIx::Class",
    "configure_requires" : {
-      "Module::Build" : "0.35"
+      "ExtUtils::MakeMaker" : "6.11"
    }
 }
 
