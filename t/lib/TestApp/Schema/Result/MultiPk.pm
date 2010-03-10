@@ -1,5 +1,5 @@
 package TestApp::Schema::Result::MultiPk;
-our $VERSION = '1.00000';
+our $VERSION = '1.001000';
 use parent 'DBIx::Class';
 use strict;
 use warnings;

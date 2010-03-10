@@ -1,5 +1,5 @@
 package Catalyst::TraitFor::Controller::DBIC::DoesPaging;
-our $VERSION = '1.00000';
+our $VERSION = '1.001000';
 
 # ABSTRACT: Helps you paginate, search, sort, and more easily using DBIx::Class
 
@@ -21,7 +21,7 @@ use Carp 'croak';
 
 sub page_and_sort {
    my ($self, $c, $rs) = @_;
-   $rs = $self->simple_sort($c, $rs);
+   $rs = $self->sort($c, $rs);
    return $self->paginate($c, $rs);
 }
 
@@ -43,13 +43,21 @@ sub paginate {
 sub search {
    my ($self, $c, $rs) = @_;
    my $q = $c->request->params;
-   return $rs->controller_search($q);
+   if ($rs->can('controller_search')) {
+      return $rs->controller_search($q);
+   } else {
+      return $self->simple_search($c, $rs);
+   }
 }
 
 sub sort {
    my ($self, $c, $rs) = @_;
    my $q = $c->request->params;
-   return $rs->controller_sort($q);
+   if ($rs->can('controller_sort')) {
+      return $rs->controller_sort($q);
+   } else {
+      return $self->simple_sort($c, $rs);
+   }
 }
 
 sub simple_deletion {
@@ -64,11 +72,11 @@ sub simple_deletion {
       $expression = { $pks[0] => { -in => $to_delete } };
    } else {
       $expression = [
-	 map {
-	    my %hash;
-	    @hash{@pks} = split /,/, $_;
-	    \%hash;
-	 } @{$to_delete}
+         map {
+            my %hash;
+            @hash{@pks} = split /,/, $_;
+            \%hash;
+         } @{$to_delete}
       ];
    }
    $rs->search($expression)->delete();
@@ -83,7 +91,7 @@ sub simple_search {
       if ( $c->request->params->{$_} and not $skips{$_} ) {
          # should be configurable
          $searches->{$rs->current_source_alias.q{.}.$_} =
-	    { like => [map "%$_%", $c->request->param($_)] };
+            { like => [map "%$_%", $c->request->param($_)] };
       }
    }
 
@@ -124,7 +132,7 @@ Catalyst::TraitFor::Controller::DBIC::DoesPaging - Helps you paginate, search, s
 
 =head1 VERSION
 
-version 1.00000
+version 1.001000
 
 =head1 SYNOPSIS
 
@@ -136,9 +144,7 @@ version 1.00000
  sub people {
     my ($self, $c) = @_;
     my $people = $self->page_and_sort(
-       $self->simple_search(
-          $self->model('DB::People');
-       )
+       $self->search( $self->model('DB::People') )
     );
     # ...
  }
@@ -158,7 +164,7 @@ return a ResultSet.
 
  my $result = $self->page_and_sort($c, $c->model('DB::Foo'));
 
-This is a helper method that will first C<sort> your data and then C<paginate>
+This is a helper method that will first L</sort> your data and then L</paginate>
 it.
 
 =head2 paginate
@@ -174,8 +180,9 @@ Paginates the passed in resultset based on the following CGI parameters:
 
  my $searched_rs = $self->search($c, $c->model('DB::Foo'));
 
-Calls the controller_search method on the passed in resultset with all of the
-CGI parameters.  I like to have this look something like the following:
+If the C<$resultset> has a C<controller_search> method it will call that method
+on the passed in resultset with all of the CGI parameters.  I like to have this
+method look something like the following:
 
  # Base search dispatcher, defined in MyApp::Schema::ResultSet
  sub _build_search {
@@ -189,8 +196,8 @@ CGI parameters.  I like to have this look something like the following:
     foreach ( keys %{$q} ) {
        if ( my $fn = $dispatch_table->{$_} and $q->{$_} ) {
           my ( $tmp_search, $tmp_meta ) = $fn->( $q->{$_} );
-          %search = ( %search, %{$tmp_search} );
-          %meta   = ( %meta,   %{$tmp_meta} );
+          %search = ( %search, %{$tmp_search||{}} );
+          %meta   = ( %meta,   %{$tmp_meta||{}} );
        }
     }
 
@@ -202,39 +209,26 @@ CGI parameters.  I like to have this look something like the following:
     my $self   = shift;
     my $params = shift;
     return $self->_build_search({
-          status => sub {
-             return { 'repair_order_status' => shift }, {};
-          },
-          part_id => sub {
-             return {
-                'lineitems.part_id' => { -like => q{%}.shift( @_ ).q{%} }
-             }, { join => 'lineitems' };
-          },
-          serial => sub {
-             return {
-                'lineitems.serial' => { -like => q{%}.shift( @_ ).q{%} }
-             }, { join => 'lineitems' };
-          },
-          id => sub {
-             return { 'id' => shift }, {};
-          },
-          customer_id => sub {
-             return { 'customer_id' => shift }, {};
-          },
-          repair_order_id => sub {
-             return {
-                'repair_order_id' => { -like => q{%}.shift( @_ ).q{%} }
-             }, {};
-          },
-       },$params
-    );
+       status => sub {
+          return { 'repair_order_status' => shift }, {};
+       },
+       part_id => sub {
+          return {
+             'lineitems.part_id' => { -like => q{%}.shift( @_ ).q{%} }
+          }, { join => 'lineitems' };
+       },
+    },$params);
  }
+
+If the C<controller_search> method does not exist, this method will call
+L</simple_search> instead.
 
 =head2 sort
 
  my $result = $self->sort($c, $c->model('DB::Foo'));
 
-Exactly the same as search, except calls controller_sort.  Here is how I use it:
+Exactly the same as search, except calls C<controller_sort> or L</simple_sort>.
+Here is how I use it:
 
  # Base sort dispatcher, defined in MyApp::Schema::ResultSet
  sub _build_sort {
@@ -251,12 +245,12 @@ Exactly the same as search, except calls controller_sort.  Here is how I use it:
 
     if ( my $fn = $dispatch_table->{$sort} ) {
        my ( $tmp_search, $tmp_meta ) = $fn->( $direction );
-       %search = ( %search, %{$tmp_search} );
-       %meta   = ( %meta,   %{$tmp_meta} );
+       %search = ( %search, %{$tmp_search||{}} );
+       %meta   = ( %meta,   %{$tmp_meta||{}} );
     } elsif ( $sort && $direction ) {
        my ( $tmp_search, $tmp_meta ) = $default->( $sort, $direction );
-       %search = ( %search, %{$tmp_search} );
-       %meta   = ( %meta,   %{$tmp_meta} );
+       %search = ( %search, %{$tmp_search||{}} );
+       %meta   = ( %meta,   %{$tmp_meta||{}} );
     }
 
     return $self->search(\%search, \%meta);
@@ -267,20 +261,19 @@ Exactly the same as search, except calls controller_sort.  Here is how I use it:
     my $self = shift;
     my $params = shift;
     return $self->_build_sort({
-         first_name => sub {
-            my $direction = shift;
-            return {}, {
-               order_by => { "-$direction" => [qw{last_name first_name}] },
-            };
-         },
-       }, sub {
-      my $param = shift;
-      my $direction = shift;
-      return {}, {
-         order_by => { "-$direction" => $param },
-      };
-       },$params
-    );
+       first_name => sub {
+          my $direction = shift;
+          return {}, {
+             order_by => { "-$direction" => [qw{last_name first_name}] },
+          };
+       },
+    }, sub {
+       my $param = shift;
+       my $direction = shift;
+       return {}, {
+          order_by => { "-$direction" => $param },
+       };
+    },$params);
  }
 
 =head2 simple_deletion
@@ -295,15 +288,17 @@ This is the only method that does not return a ResultSet.  Instead it returns an
 arrayref of the id's that it deleted.  If the ResultSet has has a multipk this will
 expect each tuple of PK's to be separated by commas.
 
-Note that this method uses the $rs->delete method, as opposed to $rs->delete_all
+Note that this method uses the C<< $rs->delete >> method, as opposed to
+C<< $rs->delete_all >>
 
 =head2 simple_search
 
  my $searched_rs = $self->simple_search($c, $c->model('DB::Foo'));
 
-Searches rs based on all fields in the request, except for fields listed in
-C<ignored_params>.  Searches with fieldname => { -like => "%$value%" }. If there are
-multiple values for a CGI parameter it will use all values via an C<or>.
+Searches the resultset based on all fields in the request, except for fields
+listed in C<ignored_params>.  Searches with
+C<< $fieldname => { -like => "%$value%" } >>.  If there are multiple values for
+a CGI parameter it will use all values via an C<or>.
 
 =head2 simple_sort
 

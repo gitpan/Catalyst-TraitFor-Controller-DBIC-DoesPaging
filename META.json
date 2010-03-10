@@ -7,7 +7,7 @@
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
    "generated_by" : "Dist::Zilla version 1.100660",
-   "version" : "1.00000",
+   "version" : "1.001000",
    "name" : "Catalyst-TraitFor-Controller-DBIC-DoesPaging",
    "author" : [
       "Arthur Axel \"fREW\" Schmidt <frioux+cpan@gmail.com>"
