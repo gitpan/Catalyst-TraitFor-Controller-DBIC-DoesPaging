@@ -1,5 +1,4 @@
 package TestApp::Schema::Result::Stations;
-our $VERSION = '1.001000';
 use parent 'DBIx::Class';
 use strict;
 use warnings;

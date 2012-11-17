@@ -1,5 +1,7 @@
 package Catalyst::TraitFor::Controller::DBIC::DoesPaging;
-our $VERSION = '1.001000';
+{
+  $Catalyst::TraitFor::Controller::DBIC::DoesPaging::VERSION = '1.001001';
+}
 
 # ABSTRACT: Helps you paginate, search, sort, and more easily using DBIx::Class
 
@@ -121,8 +123,7 @@ sub simple_sort {
 
 1;
 
-
-
+__END__
 
 =pod
 
@@ -132,7 +133,7 @@ Catalyst::TraitFor::Controller::DBIC::DoesPaging - Helps you paginate, search, s
 
 =head1 VERSION
 
-version 1.001000
+version 1.001001
 
 =head1 SYNOPSIS
 
@@ -332,16 +333,13 @@ of this module.
 
 =head1 AUTHOR
 
-  Arthur Axel "fREW" Schmidt <frioux+cpan@gmail.com>
+Arthur Axel "fREW" Schmidt <frioux+cpan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Arthur Axel "fREW" Schmidt.
+This software is copyright (c) 2012 by Arthur Axel "fREW" Schmidt.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__

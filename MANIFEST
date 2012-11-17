@@ -2,10 +2,10 @@ Changes
 LICENSE
 MANIFEST
 META.json
+META.yml
 Makefile.PL
 README
 dist.ini
-lib/Catalyst/TraitFor/Controller/DBIC/.DoesPaging.pm.swp
 lib/Catalyst/TraitFor/Controller/DBIC/DoesPaging.pm
 t/01-basic.t
 t/lib/TestApp.pm
@@ -16,5 +16,3 @@ t/lib/TestApp/Schema/Result/MultiPk.pm
 t/lib/TestApp/Schema/Result/Stations.pm
 t/lib/TestApp/Schema/ResultSet/Stations.pm
 t/lib/TestApp/View/JSON.pm
-t/release-pod-coverage.t
-t/release-pod-syntax.t
