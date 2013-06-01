@@ -31,10 +31,11 @@ my %WriteMakefileArgs = (
     "SQL::Translator" => "0.11002",
     "Test::Deep" => 0,
     "Test::More" => "0.88",
+    "Web::Util::DBIC::Paging" => 0,
     "parent" => 0
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "1.001002",
+  "VERSION" => "1.001003",
   "test" => {
     "TESTS" => "t/*.t"
   }

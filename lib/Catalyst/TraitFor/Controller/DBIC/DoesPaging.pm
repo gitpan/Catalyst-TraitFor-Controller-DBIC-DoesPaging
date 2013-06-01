@@ -1,6 +1,6 @@
 package Catalyst::TraitFor::Controller::DBIC::DoesPaging;
 {
-  $Catalyst::TraitFor::Controller::DBIC::DoesPaging::VERSION = '1.001002';
+  $Catalyst::TraitFor::Controller::DBIC::DoesPaging::VERSION = '1.001003';
 }
 
 # ABSTRACT: Helps you paginate, search, sort, and more easily using DBIx::Class
@@ -52,7 +52,7 @@ Catalyst::TraitFor::Controller::DBIC::DoesPaging - Helps you paginate, search, s
 
 =head1 VERSION
 
-version 1.001002
+version 1.001003
 
 =head1 SYNOPSIS
 

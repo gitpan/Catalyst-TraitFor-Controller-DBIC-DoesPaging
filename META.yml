@@ -24,8 +24,9 @@ requires:
   SQL::Translator: 0.11002
   Test::Deep: 0
   Test::More: 0.88
+  Web::Util::DBIC::Paging: 0
   parent: 0
 resources:
   bugtracker: https://github.com/frioux/Catalyst-TraitFor-Controller-DBIC-DoesPaging/issues
   repository: git://github.com/frioux/Catalyst-TraitFor-Controller-DBIC-DoesPaging.git
-version: 1.001002
+version: 1.001003
