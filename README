@@ -3,7 +3,7 @@ NAME
     search, sort, and more easily using DBIx::Class
 
 VERSION
-    version 1.001001
+    version 1.001002
 
 SYNOPSIS
      package MyApp::Controller::Foo;
@@ -182,6 +182,9 @@ CONFIG VARIABLES
 
          [qw{limit start sort dir _dc rm xaction}]
 
+SEE ALSO
+    Web::Util::DBIC::Paging, which this module is a thin wrapper around
+
 CREDITS
     Thanks to Micro Technology Services, Inc. for funding the initial
     development of this module.
@@ -190,7 +193,7 @@ AUTHOR
     Arthur Axel "fREW" Schmidt <frioux+cpan@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2012 by Arthur Axel "fREW" Schmidt.
+    This software is copyright (c) 2013 by Arthur Axel "fREW" Schmidt.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

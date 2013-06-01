@@ -16,3 +16,4 @@ t/lib/TestApp/Schema/Result/MultiPk.pm
 t/lib/TestApp/Schema/Result/Stations.pm
 t/lib/TestApp/Schema/ResultSet/Stations.pm
 t/lib/TestApp/View/JSON.pm
+t/release-pod-syntax.t
